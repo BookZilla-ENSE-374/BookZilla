@@ -31,35 +31,6 @@ app.listen (port, () => {
 });
 
 
-async function findInDatabaseUser() {
-    try {
-        const results = await User.find();
-        //console.log(results);
-        if ( results.length === 0 ) {
-            console.log( "no results found 1" );
-            return;
-        }
-        // this is where we have access to our results
-        console.log(results);
-    } catch ( error ) {
-        console.log( error );
-    }
-}
-
-
-// //create user schema
-// const userSchema = {
-//     name: 'user',
-//     properties: {
-//       _id: 'objectId',
-//       favorites: 'string[]',
-//       password: 'string',
-//       username: 'string',
-//     },
-//     primaryKey: '_id',
-// };
-
-
 app.get("/", (req, res)=>{
     res.sendFile(__dirname + "/Application/index.html");
 })
@@ -72,42 +43,10 @@ app.get("/requestBook", function (req, res) {
     res.render("requestBook")
 });
 
-//users collection
-// const User = mongoose.model ( "User", userSchema );
+app.get("/bookInfo", function (req, res) {
+    res.render("bookInfo")
+});
 
-//tasks collection
-// const Task = mongoose.model ( "Task", taskSchema );
-
-async function findInDatabaseUser() {
-    try {
-        const results = await User.find();
-        //console.log(results);
-        if ( results.length === 0 ) {
-            console.log( "no results found 1" );
-            return;
-        }
-        // this is where we have access to our results
-        console.log(results);
-    } catch ( error ) {
-        console.log( error );
-    }
-}
-
-
-async function findInDatabaseTask() {
-    try {
-        const results = await Task.find();
-        //console.log(results);
-        if ( results.length === 0 ) {
-            console.log( "no results found 2" );
-            return;
-        }
-        // this is where we have access to our results
-        console.log(results);
-    } catch ( error ) {
-        console.log( error );
-    }
-}
-
-// findInDatabaseUser();
-// findInDatabaseTask();
+app.get("/main", function (req, res) {
+    res.render("main")
+});

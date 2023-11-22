@@ -71,9 +71,9 @@ h1 {
     margin-right: auto;
     width: 80%;
 }
-.container {
+/* .container {
     margin-top: 50px;
-}
+} */
 
 h1.text-center.mb-4 {
     font-size: 5em;
@@ -110,22 +110,22 @@ button.btn.btn-primary:hover {
     margin-top: 50px;
 }
 
-.accordion-button {
+/* .accordion-button {
     background-color: #007bff;
     border-color: #007bff;
     color: #ffffff;
     font-size: 18px;
     font-weight: bold;
-}
+} */
 
-.accordion-button:hover {
+/* .accordion-button:hover {
     background-color: #0056b3;
     border-color: #0056b3;
-}
+} */
 
-.accordion-item {
+/* .accordion-item {
     margin-bottom: 20px;
-}
+} */
 
 .accordion-collapse {
     background-color: #f8f9fa;
@@ -133,9 +133,9 @@ button.btn.btn-primary:hover {
     border-radius: 10px;
 }
 
-.accordion-body {
+/* .accordion-body {
     padding: 20px;
-}
+} */
 
 label {
     font-size: 18px;
@@ -162,10 +162,10 @@ button:hover {
     border-color: #0056b3;
 }
 
-.accordion-button {
+/* .accordion-button {
     background-color: #000000; 
-}
+} */
 
-.accordion-collapse {
+/* .accordion-collapse {
     background-color: #000000;
-}
+} */
