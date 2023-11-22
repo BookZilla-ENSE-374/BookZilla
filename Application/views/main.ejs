@@ -1,0 +1,84 @@
+<%- include("layouts/header") -%>
+<div class="container mt-4">
+    <h1>Top Books</h1>
+    <div class="row">
+        <div class="col-md-8">
+            <div class="row">
+                <div class="col-md-12" style="max-width: 500px;">
+                    <div id="bookCarousel" class="carousel slide" data-bs-ride="carousel">
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <img src="book1.jpg" class="d-block w-100" alt="Book 1" style="width: 400px; height: 597px;">
+                            </div>
+                            <div class="carousel-item">
+                                <img src="book2.jpg" class="d-block w-100" alt="Book 2" style="width: 400px; height: 597px;">
+                            </div>
+                            <div class="carousel-item">
+                                <img src="book3.jpg" class="d-block w-100" alt="Book 3" style="width: 400px; height: 597px;">
+                            </div>
+                            <div class="carousel-item">
+                                <img src="book4.jpg" class="d-block w-100" alt="Book 4" style="width: 400px; height: 597px;">
+                            </div>
+                            <div class="carousel-item">
+                                <img src="book5.jpg" class="d-block w-100" alt="Book 5" style="width: 400px; height: 597px;">
+                            </div>
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#bookCarousel" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#bookCarousel" data-bs-slide="next">
+                            <span class="carousel-control-next-icon" ariahidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div id="bookInfo" class="mt-4"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+<div class="row mt-4">
+<h2>Popular Books</h2>
+<div class="col-2">
+    <div class="popular-book">
+        <img src="popbook1.jpg" alt="Popular Book 1" style="max-width: 100%;">
+        <p>Lord of the Rings</p>
+    </div>
+</div>
+<div class="col-2">
+    <div class="popular-book">
+        <img src="popbook2.jpg" alt="Popular Book 2" style="max-width: 100%;">
+        <p>The Alchemist</p>
+    </div>
+</div>
+<div class="col-2">
+    <div class="popular-book">
+        <img src="popbook3.jpg" alt="Popular Book 3" style="max-width: 100%;">
+        <p>Twilight</p>
+    </div>
+</div>
+<div class="col-2">
+    <div class="popular-book">
+        <img src="popbook4.jpg" alt="Popular Book 4" style="max-width: 100%;">
+        <p>Fifty Shades ofGrey</p>
+    </div>
+</div>
+<div class="col-2">
+    <div class="popular-book">
+        <img src="popbook5.jpg" alt="Popular Book 5" style="max-width: 100%;">
+        <p>The Book Thief</p>
+    </div>
+</div>
+<div class="col-2">
+    <div class="popular-book">
+        <img src="popbook6.jpg" alt="Popular Book 6" style="max-width: 100%;">
+        <p>Hunger Games</p>
+    </div>
+</div>
+</div>
+
+
+</div>
+    <%- include("layouts/footer") -%>

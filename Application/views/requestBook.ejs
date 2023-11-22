@@ -1,0 +1,34 @@
+<%- include("layouts/header") -%>
+<div class="container">
+    <h1 class="text-center mb-4">Book Suggestion</h1>
+
+    <form id="bookSuggestionForm" enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="title">Book Title</label>
+            <input type="text" class="form-control" id="title" name="title" required>
+        </div>
+
+        <div class="form-group">
+            <label for="author">Author</label>
+            <input type="text" class="form-control" id="author" name="author" required>
+        </div>
+
+        <div class="form-group">
+            <label for="coverImage">Upload Cover Image</label>
+            <input type="file" class="form-control" id="coverImage" name="coverImage" accept="image/*" required>
+        </div>
+
+        <div class="form-group">
+            <label for="synopsis">Synopsis</label>
+            <textarea class="form-control" id="synopsis" name="synopsis" rows="5" required></textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="publishDate">Publish Date</label>
+            <input type="date" class="form-control" id="publishDate" name="publishDate" required>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Submit Suggestion</button>
+    </form>
+</div>
+    <%- include("layouts/footer") -%>

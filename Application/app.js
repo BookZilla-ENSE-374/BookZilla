@@ -47,27 +47,36 @@ async function findInDatabaseUser() {
 }
 
 
-//create user schema
-const userSchema = {
-    name: 'user',
-    properties: {
-      _id: 'objectId',
-      favorites: 'string[]',
-      password: 'string',
-      username: 'string',
-    },
-    primaryKey: '_id',
-};
+// //create user schema
+// const userSchema = {
+//     name: 'user',
+//     properties: {
+//       _id: 'objectId',
+//       favorites: 'string[]',
+//       password: 'string',
+//       username: 'string',
+//     },
+//     primaryKey: '_id',
+// };
+
 
 app.get("/", (req, res)=>{
-    res.render("login");
+    res.sendFile(__dirname + "/Application/index.html");
+})
+
+app.get("/login", function (req, res) {
+    res.render("login")
+});
+
+app.get("/requestBook", function (req, res) {
+    res.render("requestBook")
 });
 
 //users collection
-const User = mongoose.model ( "User", userSchema );
+// const User = mongoose.model ( "User", userSchema );
 
 //tasks collection
-const Task = mongoose.model ( "Task", taskSchema );
+// const Task = mongoose.model ( "Task", taskSchema );
 
 async function findInDatabaseUser() {
     try {
@@ -100,5 +109,5 @@ async function findInDatabaseTask() {
     }
 }
 
-findInDatabaseUser();
-findInDatabaseTask();
+// findInDatabaseUser();
+// findInDatabaseTask();
