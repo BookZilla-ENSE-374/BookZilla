@@ -1,0 +1,25 @@
+{
+    "properties": {
+        "_id": {
+            "bsonType": "objectId"
+        },
+        "favorites": {
+            "bsonType": "array",
+            "items": {
+                "bsonType": "string"
+            }
+        },
+        "password": {
+            "bsonType": "string"
+        },
+        "username": {
+            "bsonType": "string"
+        }
+    },
+    "required": [
+        "_id",
+        "username",
+        "password"
+    ],
+    "title": "user"
+}

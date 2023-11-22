@@ -1,0 +1,46 @@
+{
+    "properties": {
+        "_bookId": {
+            "bsonType": "objectId"
+        },
+        "author": {
+            "bsonType": "string"
+        },
+        "bookTitle": {
+            "bsonType": "string"
+        },
+        "genre": {
+            "bsonType": "array",
+            "items": {
+                "bsonType": "string"
+            }
+        },
+        "review": {
+            "bsonType": "array",
+            "items": {
+                "bsonType": "object",
+                "properties": {
+                    "_reviewId": {
+                        "bsonType": "objectId"
+                    },
+                    "rating": {
+                        "bsonType": "int"
+                    },
+                    "review": {
+                        "bsonType": "string"
+                    }
+                }
+            }
+        },
+        "summary": {
+            "bsonType": "string"
+        }
+    },
+    "required": [
+        "_bookId",
+        "bookTitle",
+        "author",
+        "genre",
+        "summary"
+    ]
+}
