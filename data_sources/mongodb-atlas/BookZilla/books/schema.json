@@ -1,6 +1,6 @@
 {
     "properties": {
-        "_bookId": {
+        "_id": {
             "bsonType": "objectId"
         },
         "author": {
@@ -15,7 +15,10 @@
                 "bsonType": "string"
             }
         },
-        "review": {
+        "releaseDate": {
+            "bsonType": "date"
+        },
+        "reviews": {
             "bsonType": "array",
             "items": {
                 "bsonType": "object",
@@ -32,22 +35,12 @@
                     "username": {
                         "bsonType": "string"
                     }
-                },
-                "required": [
-                    "_reviewId",
-                    "username"
-                ]
+                }
             }
         },
         "summary": {
             "bsonType": "string"
         }
     },
-    "required": [
-        "_bookId",
-        "bookTitle",
-        "author",
-        "genre",
-        "summary"
-    ]
+    "title": "book"
 }
