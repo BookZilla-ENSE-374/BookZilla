@@ -42,5 +42,13 @@
             "bsonType": "string"
         }
     },
+    "required": [
+        "_id",
+        "author",
+        "bookTitle",
+        "genre",
+        "releaseDate",
+        "summary"
+    ],
     "title": "book"
 }
