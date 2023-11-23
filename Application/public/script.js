@@ -30,7 +30,7 @@ var bookData = [
     {
         title: 'Geronimo Stilton: Alice in Wonderland',
         author: 'Geronimo Stilton',
-        releaseDate: 'Januaru 1, 2010',
+        releaseDate: 'January 1, 2010',
         synopsis: "One summer afternoon, a curious young mouselet named Alice follows a strange white rabbit with a pocket watch down an even stranger aobbit hole. That's the beginning of a wonderful and fabumouse journey through Wonderland, a world full of unusual characters and unforgettable adventures."
     }
 ];
