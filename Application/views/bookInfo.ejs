@@ -1,18 +1,21 @@
 <%- include("layouts/header") -%>
 <div class="bookInfo">
-    <!-- need grid first with varrying sizes -->
+      <!-- We want to repeat this for each game in the database -->
+    <!-- End repeating bit -->
 
+    <!-- need grid first with varrying sizes -->
     <div class="card mb-3" style="max-width: 540px;">
       <div class="row g-0">
         <div class="col-md-4">
-          <img src="images/book1.jpg" class="img-fluid rounded-start" alt="...">
+          <img src="<%= results[0].imgurl %>" class="img-fluid rounded-start" alt="Book Cover">
         </div>
         <div class="col-md-8">
           <div class="card-body">
-            <h5 class="card-title">Book Title</h5>
+            <h5 class="card-title"><%= results[0].bookTitle %></h5>
             <p class="card-text">Rating: score/5 + # of votes <br>
-            Author: name <br>
-            Genres: example</p>
+            Author: <%= results[0].author %> <br>
+            Genres: <%= results[0].genre %> <br>
+            Release Date: <%= results[0].releaseDate %></p>
             <input type="checkbox" class="btn-check" id="btncheck1" autocomplete="off">
             <label class="btn btn-outline-primary" for="btncheck1">Favorite</label>
             <!-- <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p> -->
@@ -39,4 +42,4 @@
       <div>The posts by other people about the book</div>
     </div>
 </div>
-    <%- include("layouts/footer") -%>
+<%- include("layouts/footer") -%>
