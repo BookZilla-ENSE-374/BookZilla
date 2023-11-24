@@ -166,7 +166,7 @@ app.post("/register", (req, res) => {
 app.get( "/bookInfo", async( req, res ) => {
     console.log( "A user is accessing the reviews route using get, and found the following:" );
     try {
-        const results = await Book.find();
+        const results = await Book.find({_id: req.body});
         console.log( results );
         res.render( "bookInfo", { results: results });
     } catch ( error ) {

@@ -1,24 +1,33 @@
 <%- include("layouts/header") -%>
 <div class="bookInfo">
-      <!-- We want to repeat this for each game in the database -->
-    <!-- End repeating bit -->
-
-    <!-- need grid first with varrying sizes -->
-    <div class="card mb-3" style="max-width: 540px;">
+  <div class="bookInfo">
+    <div class="card mb-3" style="max-width: 1300px;">
       <div class="row g-0">
         <div class="col-md-4">
-          <img src="<%= results[0].imgurl %>" class="img-fluid rounded-start" alt="Book Cover">
+          <img src="images/book1.jpg" class="img-fluid" alt="..." style="width: 400px; height: 497px;">
         </div>
         <div class="col-md-8">
           <div class="card-body">
-            <h5 class="card-title"><%= results[0].bookTitle %></h5>
+            <div class="d-flex justify-content-between align-items-start">
+              <h5 class="card-title">Book Title</h5>
+              <input type="checkbox" class="btn-check" id="btncheck1" autocomplete="off">
+              <label class="btn btn-outline-primary" for="btncheck1">Favorite</label>
+            </div>
             <p class="card-text">Rating: score/5 + # of votes <br>
-            Author: <%= results[0].author %> <br>
-            Genres: <%= results[0].genre %> <br>
-            Release Date: <%= results[0].releaseDate %></p>
-            <input type="checkbox" class="btn-check" id="btncheck1" autocomplete="off">
-            <label class="btn btn-outline-primary" for="btncheck1">Favorite</label>
-            <!-- <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p> -->
+              Author: name <br>
+              Genres: example</p>
+            <div class="rating">
+              <input type="radio" id="star1" name="rating" value="1">
+              <label for="star1"></label>
+              <input type="radio" id="star2" name="rating" value="2">
+              <label for="star2"></label>
+              <input type="radio" id="star3" name="rating" value="3">
+              <label for="star3"></label>
+              <input type="radio" id="star4" name="rating" value="4">
+              <label for="star4"></label>
+              <input type="radio" id="star5" name="rating" value="5">
+              <label for="star5"></label>
+            </div>
           </div>
         </div>
       </div>
@@ -32,10 +41,6 @@
       </div>
     </div>
 
-    <div class="card mb-3">
-      <label for="customRange2" class="form-label">Rate the book</label>
-      <input type="range" class="form-range" min="1" max="5" id="customRange2">
-    </div>
     <div class="form-floating">
       <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px"></textarea>
       <label for="floatingTextarea2">Add your thoughts on this book</label>
