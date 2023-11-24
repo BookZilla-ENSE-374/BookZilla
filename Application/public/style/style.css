@@ -170,3 +170,28 @@ button:hover {
   .rating input:checked ~ label {
     color: #f8d64e; 
   }
+
+  .post-box {
+    border: 1px solid #ccc;
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+  }
+
+  .post-box textarea {
+    width: 100%;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    padding: 10px;
+    resize: none;
+  }
+
+  .post-box button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
