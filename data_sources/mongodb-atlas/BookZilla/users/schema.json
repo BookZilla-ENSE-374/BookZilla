@@ -18,8 +18,8 @@
     },
     "required": [
         "_id",
-        "username",
-        "password"
+        "password",
+        "username"
     ],
     "title": "user"
 }

@@ -1,1 +1,8 @@
-{}
+{
+    "favorites": {
+        "ref": "#/relationship/mongodb-atlas/BookZilla/books",
+        "source_key": "favorites",
+        "foreign_key": "bookTitle",
+        "is_list": true
+    }
+}

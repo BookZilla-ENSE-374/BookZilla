@@ -1,8 +1,1 @@
-{
-    "review.[].username": {
-        "ref": "#/relationship/mongodb-atlas/BookZilla/users",
-        "source_key": "review.[].username",
-        "foreign_key": "username",
-        "is_list": false
-    }
-}
+{}
