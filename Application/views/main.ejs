@@ -1,4 +1,8 @@
-<%- include("layouts/header") -%>
+<% if (locals.username) { %>
+    <%- include("layouts/header", { username: username }) -%>
+    <% } else { %>
+    <%- include("layouts/header") -%>
+    <% } %>
 <div class="container mt-4">
     <h1>Top Books</h1>
     <div class="row">
@@ -7,19 +11,41 @@
                 <div class="col-md-12" style="max-width: 500px;">
                     <div id="bookCarousel" class="carousel slide" data-bs-ride="carousel">
                         <div class="carousel-inner">
-                            <% for (let i = 0; i < 5; i++) { %>
+
                                 <div class="carousel-item active">
-                                    <img src="<images/book1.jpg>" class="d-block w-100" alt="Book 1" style="width: 400px; height: 597px;">
+                                    <form action="/bookInfo" method="post">
+                                        <button type="submit" value="<%= results[0]._id%>" class="coverPicture" name="submitbutton">
+                                            <img src="<%= results[0].imgurl%>" class="d-block w-100" alt="<%= results[0].imgurl%>" style="width: 400px; height: 597px;"/>
+                                        </button>
+                                    </form>
                                 </div>
-                            <% } %>
                             <div class="carousel-item">
-                                <img src="images/book2.jpg" class="d-block w-100" alt="Book 2" style="width: 400px; height: 597px;">
+                                <form action="/bookInfo" method="post">
+                                    <button type="submit" value="<%= results[1]._id%>" class="coverPicture" name="submitbutton">
+                                        <img src="<%= results[1].imgurl%>" class="d-block w-100" alt="<%= results[1].imgurl%>" style="width: 400px; height: 597px;"/>
+                                    </button>
+                                </form>
                             </div>
                             <div class="carousel-item">
-                                <img src="images/book3.jpg" class="d-block w-100" alt="Book 3" style="width: 400px; height: 597px;">
+                                <form action="/bookInfo" method="post">
+                                    <button type="submit" value="<%= results[2]._id%>" class="coverPicture" name="submitbutton">
+                                        <img src="<%= results[2].imgurl%>" class="d-block w-100" alt="<%= results[2].imgurl%>" style="width: 400px; height: 597px;"/>
+                                    </button>
+                                </form>
                             </div>
                             <div class="carousel-item">
-                                <img src="images/book4.jpg" class="d-block w-100" alt="Book 4" style="width: 400px; height: 597px;">
+                                <form action="/bookInfo" method="post">
+                                    <button type="submit" value="<%= results[3]._id%>" class="coverPicture" name="submitbutton">
+                                        <img src="<%= results[3].imgurl%>" class="d-block w-100" alt="<%= results[3].imgurl%>" style="width: 400px; height: 597px;"/>
+                                    </button>
+                                </form>
+                            </div>
+                            <div class="carousel-item">
+                                <form action="/bookInfo" method="post">
+                                    <button type="submit" value="<%= results[4]._id%>" class="coverPicture" name="submitbutton">
+                                        <img src="<%= results[4].imgurl%>" class="d-block w-100" alt="<%= results[4].imgurl%>" style="width: 400px; height: 597px;"/>
+                                    </button>
+                                </form>
                             </div>
                         </div>
                         <button class="carousel-control-prev" type="button" data-bs-target="#bookCarousel" data-bs-slide="prev">
