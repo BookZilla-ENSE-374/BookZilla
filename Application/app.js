@@ -31,21 +31,19 @@ app.listen (port, () => {
     console.log (`Server is running on http://localhost:${port}`);
 });
 
+let userLogedin = null;
 
 app.get("/", (req, res)=>{
     res.sendFile(__dirname + "/Application/index.html");
 })
 
 app.get("/login", function (req, res) {
+    userLogedin = null;
     res.render("login")
 });
 
 app.get("/requestBook", function (req, res) {
     res.render("requestBook")
-});
-
-app.get("/main", function (req, res) {
-    res.render("main")
 });
 
 const userSchema = new mongoose.Schema ({
@@ -80,98 +78,128 @@ const User = mongoose.model ( "User", userSchema );
 //Books collection
 const Book = mongoose.model ( "Book", bookSchema );
 
-async function findInDatabaseUser() {
+
+app.post( "/login", async( req, res ) => {
     try {
-        const results = await User.find();
-        //console.log(results);
-        if ( results.length === 0 ) {
-            console.log( "no results found 1" );
-            return;
+        const { username, password } = req.body; // Assuming you have form fields named 'username' and 'password'
+
+        // Find the user by username in the database
+        const user = await User.findOne({ username });
+
+        if (!user) {
+            console.log("User not found");
+            return res.status(401).send("Invalid username or password");
         }
-        // this is where we have access to our results
-        console.log(results);
-    } catch ( error ) {
-        console.log( error );
-    }
-}
+        userLogedin = username;
+        // Check if the provided password matches the stored password
+        const isPasswordValid = user.password === password;
 
-
-async function findInDatabaseBook() {
-    try {
-        const results = await Book.find();
-        //console.log(results);
-        if ( results.length === 0 ) {
-            console.log( "no results found 2" );
-            return;
+        if (!isPasswordValid) {
+            console.log("Invalid password");
+            return res.status(401).send("Invalid username or password");
         }
-        // this is where we have access to our results
-        console.log(results);
-    } catch ( error ) {
-        console.log( error );
+
+        // If both username and password are valid, you can consider the user as logged in
+        console.log("User successfully logged in");
+        res.redirect("/main");
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Internal Server Error");
     }
-}
-
-findInDatabaseUser();
-findInDatabaseBook();
-
-
-app.post( "/login", ( req, res ) => {
-    console.log( "User " + req.body.username + " is attempting to log in" );
-    const user = new User ({
-        username: req.body.username,
-        password: req.body.password
-    });
-    console.log(user);
-    req.login ( user, ( err ) => {
-         if ( err ) {
-             console.log( err );
-             res.redirect( "/" );
-         } else {
-            passport.authenticate( 'local', { successRedirect:'/main',
-            failureRedirect: '/' })( req, res, () => {
-                res.redirect( "/main" ); 
-            });
-         }
-    });
 });
 
-app.post("/register", (req, res) => {
-    let success = false;
-    let unique = true;
-    let userList = readUser()["list"];
+app.post("/register", async(req, res) => {
+    try {
+        const { username, password } = req.body;
 
-    for(var i = 0; i <userList.length; i++){
-      if(req.body.signupuname == userList[i].username){
-        unique = false;
-        console.log("username taken.")
-        res.redirect("/");
-      };
-    }
+        // Check if the username is already taken
+        const existingUser = await User.findOne({ username });
 
-    if(req.body.signuppass && unique){
-      success = true;
-      users = readUser();
-      users["list"].push({"username" : req.body.signupuname, "password" : req.body.signuppass})
-      writeUser();
-      res.render("todo", { username: req.body.signupuname, Books: readBook()});
-    }
-    
-    if(!success){
-      console.log("failed user login")
-      res.redirect("/")
+        if (existingUser) {
+            console.log("Username already taken");
+            return res.status(409).send("Username already taken");
+        }
+
+        // Create a new user
+        const newUser = new User({ username, password });
+
+        // Save the user to the database
+        await newUser.save();
+
+        console.log("User registered successfully");
+        res.redirect("/login"); // Redirect to the login page after successful registration
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Internal Server Error");
+        // res.render("login");
     }
 });
 
 
-app.get( "/bookInfo", async( req, res ) => {
-    console.log( "A user is accessing the reviews route using get, and found the following:" );
+app.post( "/bookInfo", async( req, res ) => {
+    console.log( "A user is the bookInfo route using post, and found the following:" );
+    try {
+        const bookId = req.body.submitbutton; // Assuming submitbutton contains the book ID
+        const result = await Book.findById(bookId);
+
+        if (!result) {
+            // Handle the case where the book with the specified ID is not found
+            console.log("Book not found");
+            return res.status(404).send("Book not found");
+        }
+
+        const reviews = result.reviews || [];
+        const ratedReviews = reviews.filter(review => review.rating !== undefined && review.rating !== null);
+        const totalRatings = ratedReviews.reduce((sum, review) => sum + review.rating, 0);
+        const averageRating = ratedReviews.length > 0 ? totalRatings / ratedReviews.length : 0;
+        const numRatings = ratedReviews.length;
+
+        console.log(result);
+        console.log(`Average Rating: ${averageRating}`);
+        res.render("bookInfo", { result, averageRating, numRatings, username: userLogedin });
+    } catch ( error ) {
+        console.log( error );
+    }
+});
+
+
+app.get("/main", async (req, res) => {
     try {
         const results = await Book.find();
+        // Need to a query for finding the most popular books
         console.log( results );
-        res.render( "bookInfo", { results: results });
+        console.log(userLogedin);
+        res.render( "main", { results: results, username: userLogedin });
     } catch ( error ) {
         console.log( error );
     }
 });
 
+app.get("/rate", async (req, res) => {
+    try {
+        const bookId = req.params.bookId;
+        const rating = req.body.rating; // Assuming you have a form field named 'rating'
+
+        // You might want to add validation for the rating here
+
+        const book = await Book.findById(bookId);
+
+        if (!book) {
+            console.log("Book not found");
+            return res.status(404).send("Book not found");
+        }
+
+        // Add the new rating to the reviews list
+        book.reviews.push({ username: "currentUser", rating: parseInt(rating) });
+
+        // Update the book in the database
+        const updatedBook = await book.save();
+
+        console.log("Rating added successfully");
+        res.redirect(`/bookInfo/${bookId}`); // Redirect to the bookInfo page for the updated book
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Internal Server Error");
+    }
+});
 

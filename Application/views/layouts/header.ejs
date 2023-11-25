@@ -8,12 +8,21 @@
     <title>BookZilla</title>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark nav-fill">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <a class="navbar-brand" href="main">BookZilla</a>
         <div class="d-flex justify-content-center w-50">
             <input class="search-bar" type="text" id="searchInput" placeholder="Search books..." style="width: 80%;">
         </div>
-        <a class="nav-link" href="requestBook">Book Request</a>
-        <a class="nav-link" aria-disabled="true">username</a>
-        <input type="button" value="Logout">
+        <% if (locals.username) { %>
+        <div class="ms-auto me-2">
+            <div class="dropdown">
+                <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                    <strong><%= username %></strong>
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                    <li><a class="dropdown-item" href="login">Logout</a></li>
+                </ul>
+            </div>
+        </div>
+        <% } %>
     </nav>
