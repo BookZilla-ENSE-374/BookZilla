@@ -1,4 +1,8 @@
-<%- include("layouts/header") -%>
+<% if (locals.username) { %>
+    <%- include("layouts/header", { username: username }) -%>
+    <% } else { %>
+    <%- include("layouts/header") -%>
+    <% } %>
 <div class="container">
     <h1 class="text-center mb-4">Book Suggestion</h1>
 

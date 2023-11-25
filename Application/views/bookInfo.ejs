@@ -1,45 +1,57 @@
+<% if (locals.username) { %>
+<%- include("layouts/header", { username: username }) -%>
+<% } else { %>
 <%- include("layouts/header") -%>
+<% } %>
 <div class="bookInfo">
-      <!-- We want to repeat this for each game in the database -->
-    <!-- End repeating bit -->
-
-    <!-- need grid first with varrying sizes -->
-    <div class="card mb-3" style="max-width: 540px;">
-      <div class="row g-0">
-        <div class="col-md-4">
-          <img src="<%= results[0].imgurl %>" class="img-fluid rounded-start" alt="Book Cover">
-        </div>
-        <div class="col-md-8">
-          <div class="card-body">
-            <h5 class="card-title"><%= results[0].bookTitle %></h5>
-            <p class="card-text">Rating: score/5 + # of votes <br>
-            Author: <%= results[0].author %> <br>
-            Genres: <%= results[0].genre %> <br>
-            Release Date: <%= results[0].releaseDate %></p>
+  <div class="card mb-3" style="max-width: 1300px;">
+    <div class="row g-0">
+      <div class="col-md-4">
+        <img src="<%= result.imgurl %>" class="img-fluid" alt="<%= result.imgurl %>" style="width: 400px; height: 497px;">
+      </div>
+      <div class="col-md-8">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-start">
+            <h5 class="card-title"><%= result.bookTitle %></h5>
             <input type="checkbox" class="btn-check" id="btncheck1" autocomplete="off">
             <label class="btn btn-outline-primary" for="btncheck1">Favorite</label>
-            <!-- <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p> -->
+          </div>
+          <p class="card-text">Rating: <%= averageRating %> with <%= numRatings %> votes <br>
+            Author: <%= result.author %> <br>
+            Genres: <%= result.genre %></p>
+            
+            <div class="row mt-4">
+              <form id="ratingForm" action="/rate" method="post">
+                  <div class="mb-3">
+                      <label for="rating" class="form-label">Select your rating:</label>
+                      <div class="rating">
+                          <input type="radio" id="star5" name="rating" value="5"><label for="star5"></label>
+                          <input type="radio" id="star4" name="rating" value="4"><label for="star4"></label>
+                          <input type="radio" id="star3" name="rating" value="3"><label for="star3"></label>
+                          <input type="radio" id="star2" name="rating" value="2"><label for="star2"></label>
+                          <input type="radio" id="star1" name="rating" value="1"><label for="star1"></label>
+                      </div>
+                  </div>
+                  <button type="submit" class="btn btn-primary" style="padding: 0.2rem 0.5rem; font-size: 0.8rem;">Submit</button>
+              </form>
+          </div>
+          
+          <div class="card-body">
+            <h5 class="card-title">Summary</h5>
+            <p class="card-text"><%= result.summary %></p>
+        
           </div>
         </div>
       </div>
     </div>
-    <div class="card mb-3">
-      <!-- <img src="..." class="card-img-top" alt="..."> -->
-      <div class="card-body">
-        <h5 class="card-title">Summary</h5>
-        <p class="card-text">"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."</p>
-        <!-- <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p> -->
-      </div>
-    </div>
+  </div>
 
-    <div class="card mb-3">
-      <label for="customRange2" class="form-label">Rate the book</label>
-      <input type="range" class="form-range" min="1" max="5" id="customRange2">
+  <div class = "card">
+    <div class="post-box">
+      <h5 class="card-title">Add Your Post</h5>
+      <textarea class="form-control" placeholder="Write your post here..." rows="5"></textarea>
+      <button class="btn btn-primary">Submit Post</button>
     </div>
-    <div class="form-floating">
-      <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px"></textarea>
-      <label for="floatingTextarea2">Add your thoughts on this book</label>
-      <div>The posts by other people about the book</div>
-    </div>
+  </div>
 </div>
 <%- include("layouts/footer") -%>
