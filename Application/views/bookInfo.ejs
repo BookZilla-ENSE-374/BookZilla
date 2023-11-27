@@ -20,6 +20,7 @@
             Author: <%= result.author %> <br>
             Genres: <%= result.genre %></p>
             
+            <% if (locals.username) { %>
             <div class="row mt-4">
               <form id="ratingForm" action="/rate" method="post">
                   <div class="mb-3">
@@ -32,9 +33,10 @@
                           <input type="radio" id="star1" name="rating" value="1"><label for="star1"></label>
                       </div>
                   </div>
-                  <button type="submit" class="btn btn-primary" style="padding: 0.2rem 0.5rem; font-size: 0.8rem;">Submit</button>
+                  <button type="submit" class="btn btn-primary" style="padding: 0.2rem 0.5rem; font-size: 0.8rem;" value="<%= result._id%>" name="submitbutton">Submit</button>
               </form>
           </div>
+          <% } %>
           
           <div class="card-body">
             <h5 class="card-title">Summary</h5>
@@ -47,11 +49,27 @@
   </div>
 
   <div class = "card">
+    <h5>Reviews</h5>
+    <% if (locals.username) { %>
     <div class="post-box">
       <h5 class="card-title">Add Your Post</h5>
-      <textarea class="form-control" placeholder="Write your post here..." rows="5"></textarea>
-      <button class="btn btn-primary">Submit Post</button>
+      <form action="/review" method="post">
+        <textarea class="form-control" placeholder="Write your post here..." rows="5" name="review"></textarea>
+        <button class="btn btn-primary" value="<%= result._id%>" name="submitbutton">Submit Post</button>
+      </form>
     </div>
+    <% } %>
+    <div class="comments-container">
+      <!-- Add your comments here -->
+      <% for ( const review of result.reviews ) { %>
+       <%if (review.review) { %>
+        <div class="comment">
+          <p><%= review.username %>: <%= review.review %></p>
+      </div>
+      <% } %>
+      <% } %>
+      
+  </div>
   </div>
 </div>
 <%- include("layouts/footer") -%>
