@@ -18,6 +18,7 @@ connect();
 app.use(express.static("public"));
 // body-parser is now built into express!
 app.use(express.urlencoded({ extended: true})); 
+const { v4: uuidv4 } = require('uuid');
 
 
 // a common localhost test port
@@ -65,7 +66,6 @@ const bookSchema = new mongoose.Schema ({
     reviews: [
         {
             username: String,
-            _id: Number,
             rating: Number,
             review: String
         }
@@ -111,7 +111,7 @@ app.post( "/login", async( req, res ) => {
 app.post("/register", async(req, res) => {
     try {
         const { username, password } = req.body;
-
+        const id = uuidv4();
         // Check if the username is already taken
         const existingUser = await User.findOne({ username });
 
@@ -137,7 +137,7 @@ app.post("/register", async(req, res) => {
 
 
 app.post( "/bookInfo", async( req, res ) => {
-    console.log( "A user is the bookInfo route using post, and found the following:" );
+    console.log( "A user is going to bookInfo route using post, and found the following:" );
     try {
         const bookId = req.body.submitbutton; // Assuming submitbutton contains the book ID
         const result = await Book.findById(bookId);
@@ -175,9 +175,9 @@ app.get("/main", async (req, res) => {
     }
 });
 
-app.get("/rate", async (req, res) => {
+app.post("/rate", async (req, res) => {
     try {
-        const bookId = req.params.bookId;
+        const bookId = req.body.submitbutton;
         const rating = req.body.rating; // Assuming you have a form field named 'rating'
 
         // You might want to add validation for the rating here
@@ -190,16 +190,53 @@ app.get("/rate", async (req, res) => {
         }
 
         // Add the new rating to the reviews list
-        book.reviews.push({ username: "currentUser", rating: parseInt(rating) });
+        book.reviews.push({ username: userLogedin, rating: parseInt(rating)});
 
         // Update the book in the database
         const updatedBook = await book.save();
+        
+        const reviews = book.reviews || [];
+        const ratedReviews = reviews.filter(review => review.rating !== undefined && review.rating !== null);
+        const totalRatings = ratedReviews.reduce((sum, review) => sum + review.rating, 0);
+        const averageRating = ratedReviews.length > 0 ? totalRatings / ratedReviews.length : 0;
+        const numRatings = ratedReviews.length;
 
         console.log("Rating added successfully");
-        res.redirect(`/bookInfo/${bookId}`); // Redirect to the bookInfo page for the updated book
+        res.render("bookInfo", {result : book, averageRating, numRatings, username: userLogedin }); // Redirect to the bookInfo page for the updated book
     } catch (error) {
         console.error(error);
         res.status(500).send("Internal Server Error");
     }
 });
 
+app.post("/review", async (req, res) => {
+    try {
+        const bookId = req.body.submitbutton;
+        const review = req.body.review;
+
+        const book = await Book.findById(bookId);
+
+        if (!book) {
+            console.log("Book not found");
+            return res.status(404).send("Book not found");
+        }
+
+        // Add the new rating to the reviews list
+        book.reviews.push({ username: userLogedin, review: review});
+
+        // Update the book in the database
+        const updatedBook = await book.save();
+
+        const reviews = book.reviews || [];
+        const ratedReviews = reviews.filter(review => review.rating !== undefined && review.rating !== null);
+        const totalRatings = ratedReviews.reduce((sum, review) => sum + review.rating, 0);
+        const averageRating = ratedReviews.length > 0 ? totalRatings / ratedReviews.length : 0;
+        const numRatings = ratedReviews.length;
+
+        console.log("review added successfully");
+        res.render("bookInfo", {result : book, averageRating, numRatings, username: userLogedin }); // Redirect to the bookInfo page for the updated book
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Internal Server Error");
+    }
+});
