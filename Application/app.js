@@ -35,7 +35,7 @@ app.listen (port, () => {
 let userLogedin = null;
 
 app.get("/", (req, res)=>{
-    res.sendFile(__dirname + "/Application/index.html");
+    res.redirect("/login");
 })
 
 app.get("/login", function (req, res) {
@@ -140,12 +140,14 @@ app.post( "/bookInfo", async( req, res ) => {
     console.log( "A user is going to bookInfo route using post, and found the following:" );
     try {
         const bookId = req.body.submitbutton; // Assuming submitbutton contains the book ID
+        console.log(req.body, "something supposed to be here");
+        console.log(req.body.submitbutton);
         const result = await Book.findById(bookId);
 
         if (!result) {
             // Handle the case where the book with the specified ID is not found
             console.log("Book not found");
-            return res.status(404).send("Book not found");
+            res.redirect("/main")
         }
 
         const reviews = result.reviews || [];
@@ -167,7 +169,7 @@ app.get("/main", async (req, res) => {
     try {
         const results = await Book.find();
         // Need to a query for finding the most popular books
-        console.log( results );
+        // console.log( results );
         console.log(userLogedin);
         res.render( "main", { results: results, username: userLogedin });
     } catch ( error ) {
@@ -182,6 +184,10 @@ app.post("/rate", async (req, res) => {
 
         // You might want to add validation for the rating here
 
+        if (isNaN(parseInt(rating)) || parseInt(rating) < 1 || parseInt(rating) > 5) {
+            return res.status(400).send("Invalid rating");
+        }
+
         const book = await Book.findById(bookId);
 
         if (!book) {
@@ -189,8 +195,15 @@ app.post("/rate", async (req, res) => {
             return res.status(404).send("Book not found");
         }
 
+        const existingRatingIndex = book.reviews.findIndex(review => review.username === userLogedin);
         // Add the new rating to the reviews list
-        book.reviews.push({ username: userLogedin, rating: parseInt(rating)});
+        if (existingRatingIndex !== -1) {
+            // Update the existing rating
+            book.reviews[existingRatingIndex].rating = parseInt(rating);
+        } else {
+            // Add a new rating
+            book.reviews.push({ username: userLogedin, rating: parseInt(rating) });
+        }
 
         // Update the book in the database
         const updatedBook = await book.save();
