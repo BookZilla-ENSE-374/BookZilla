@@ -195,3 +195,6 @@ input {
     border-radius: 4px;
 }
 
+.nav-link {
+    color: #ccc;
+}
